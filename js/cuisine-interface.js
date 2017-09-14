@@ -1,74 +1,43 @@
 var apiKey = require('./../.env').apiKey;
 
-import{Cuisine} from './../js/cuisine.js';
+import {Cuisine} from './../js/cuisine.js';
 
 $(function(){
 $("#cuisine").submit(function(event){
   event.preventDefault();
   let lat = $("#lat").val();
   let long = $("#long").val();
-  let restaurants = Cuisine.apiRequest(lat, long, display);
+  let city = $("#city").val();
+  console.log(lat);
+  console.log(long);
+  // let restaurants = Cuisine.promiseTwo(lat, long, display);
+  let cityLongLat = Cuisine.promiseOne(city);
 
-  console.log(restaurants + "rest");
+
 
   function display(apiArray) {
     apiArray.forEach(function(api) {
-    $("#output").append("<li>"  + '<a href=' + api.url +'>' + api.name +  '</a>'+ '<p>' + api.address + '</p>');
-      $("#output").append("<button class= " + 'btn-info'+ "onclick" + sayHi() + ">" + 'See on the maps' + "</button>");
-      initMap(api.latitude, api.longitude);
+
+    $("#output").append("<li>" + api.name + '<p>' + api.address + '</p>' + '<div id = ' + api.id + '>' + 'Rating: ' + api.userrating  + '<br>' + 'Average cost for two($): ' + api.cost + '<br>' + 'Cuisines: ' + api.cuisines + '<br>' +
+    '<a href=' + api.url +'>' + 'Restaurant link'  +  '</a>' + '</div>');
   });
 
 
-          function sayHi() {
-            console.log('hi');
-          }
   $("input").val("");
 
-  }
-
-  // function map(api){
-  //   let apiArray = [];
-  //   api.forEach(function(apiMap){
-  //      let latitude = apiMap.latitude;
-  //      let longitude = apiMap.longitude;
-  //      apiArray.push(latitude, longitude);
-  //       console.log(apiArray);
-  //      return apiArray;
-  //
-  //
+  // function initMap(restaurantLocation, arrayOfRestaurants) {
+  //   let map = new google.maps.Map(document.getElementById('map'), {
+  //   zoom: 15,
+  //   center: restaurantLocation
+  // });
+  // arrayOfRestaurants.forEach(function(location){
+  //   new google.maps.Marker({
+  //     position: location,
+  //     map: restaurantLocation,
+  //     });
   //   });
   // }
-  // let lati =45.5231 ;
-  // let longi =-122.6765;
-  function initMap(lati, longi) {
-    console.log(lati);
-    console.log(longi);
-    var uluru = {lat: lati , lng: longi};
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom:15,
-      center: uluru
-    });
-    var marker = new google.maps.Marker({
-      draggable: true,
-      animation: google.maps.Animation.DROP,
-      position: uluru,
-      map: map
-    });
-    marker.setCenter(map);
-
+  // initMap()
   }
-  // initMap();
-
-    // function initMap() {
-    //   var uluru = {lat: -25.363, lng: 131.044};
-    //    var map = new google.maps.Map(document.getElementById('map'), {
-    //      zoom: 4,
-    //      center: uluru
-    //    });
-    //    var marker = new google.maps.Marker({
-    //      position: uluru,
-    //      map: map
-    //    });
-    // }
-  });
+});
 });
