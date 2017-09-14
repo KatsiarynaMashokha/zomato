@@ -7,11 +7,10 @@ $("#cuisine").submit(function(event){
   event.preventDefault();
   let lat = $("#lat").val();
   let long = $("#long").val();
-  let city = $("#city").val();
-  console.log(lat);
-  console.log(long);
+  // let city = $("#city").val();
+  Cuisine.apiRequest(lat, long, display);
   // let restaurants = Cuisine.promiseTwo(lat, long, display);
-  let cityLongLat = Cuisine.promiseOne(city);
+  // let cityLongLat = Cuisine.coordinateFinder(city);
 
 
 
@@ -25,19 +24,6 @@ $("#cuisine").submit(function(event){
 
   $("input").val("");
 
-  // function initMap(restaurantLocation, arrayOfRestaurants) {
-  //   let map = new google.maps.Map(document.getElementById('map'), {
-  //   zoom: 15,
-  //   center: restaurantLocation
-  // });
-  // arrayOfRestaurants.forEach(function(location){
-  //   new google.maps.Marker({
-  //     position: location,
-  //     map: restaurantLocation,
-  //     });
-  //   });
-  // }
-  // initMap()
   }
 });
 });
